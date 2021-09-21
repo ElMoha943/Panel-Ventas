@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+
+  <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+      <span class="fs-4">Panel</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="#" class="nav-link active" aria-current="page">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+          Inicio
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
+          Productos
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+          Clientes
+        </a>
+      </li>
+    </ul>
+    <hr>
+  </div>
+
+  <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      <h1 class="h2">Ventas Recientes</h1>
+      <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group me-2">
+          <button type="button" class="btn btn-sm btn-outline-secondary">Compartir</button>
+          <button type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
+        </div>
+      </div>
+    </div>
+
+    <canvas class="my-4 w-100 chartjs-render-monitor" id="myChart" width="586" height="247" style="display: block; width: 586px; height: 247px;"></canvas>
+
+    <h2>Lista de Productos</h2>
+<div class="table-responsive">
+  <div>
+    <form method="post" action="/">
+      <input type="text" name="Nombre">
+      <input type="text" name="Precio">
+      <input type="submit" name="add" value="Agregar">
+      <input type="submit" name="deleteall" value="Eliminar">
+    </form>
+  </div>
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Precio</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for producto in productos %}
+      <tr>
+        <td>{{ producto.id }}</td>
+        <td>{{ producto.nombre }}</td>
+        <td>{{ producto.precio }}</td>
+        <td><a href="{{ url_for('views.edit', id=producto.id) }}">Editar</a></td>
+        <td><a href="{{ url_for('views.delete', id=producto.id) }}">Borrar</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+    
+  </main>
+</div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='dashboard.js') }}"
+></script>
+<script type="text/javascript">
+  myFunc({{ data|tojson }})
+</script>
+{% endblock %}

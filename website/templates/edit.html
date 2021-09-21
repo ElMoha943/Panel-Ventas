@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+	<form method="post" action="/edit/{{ id }}">
+		<input type="text" name="Nombre" value="{{ name }}">
+		<input type="text" name="Precio" value="{{ price }}">
+		<input type="submit" name="edit" value="Editar">
+	</form>
+</div>
+{% endblock %}
